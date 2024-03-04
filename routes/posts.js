@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Post = require('../models/Post.js');
 
 // Example route: Get all posts
 router.get('/', (req, res) => {
@@ -11,14 +12,18 @@ router.post('/', async (req, res) => {
   const newPost = new Post({
     title: req.body.title,
     content: req.body.content,
-    author: req.body.author // This would be the ObjectId of the user
+    author: req.body.author, // This would be the ObjectId of the user
+    genre: req.body.genre
   });
 
   try {
+    console.log("POGGERS");
     const savedPost = await newPost.save();
+    console.log("POGGERS");
     res.status(201).json(savedPost);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    console.log(err); // This will help identify what went wrong
+  res.status(400).json({ message: err.message });
   }
 });
 

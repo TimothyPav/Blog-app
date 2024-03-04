@@ -7,7 +7,8 @@ const postSchema = new mongoose.Schema({
         ref: 'User' // This tells Mongoose that this ObjectId references the User model
     },
     title: { type: String, required: true },
-    date: { type: Date, required: true },
+    content: { type: String, required: true },
+    date: { type: Date, default: Date.now },
     genre: {type: String, required: true }
 });
 
