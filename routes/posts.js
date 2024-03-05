@@ -17,9 +17,7 @@ router.post('/', async (req, res) => {
   });
 
   try {
-    console.log("POGGERS");
     const savedPost = await newPost.save();
-    console.log("POGGERS");
     res.status(201).json(savedPost);
   } catch (err) {
     console.log(err); // This will help identify what went wrong
