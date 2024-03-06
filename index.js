@@ -7,10 +7,7 @@ const mongoose = require('mongoose');
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Middleware for parsing application/x-www-form-urlencoded
 
-mongoose.connect('mongodb://localhost:27017/blogDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect('mongodb://localhost:27017/blogDB')
 .then(() => console.log("Connected to MongoDB"))
 .catch(err => console.error("An error has occurred", err));
 

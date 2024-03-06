@@ -7,8 +7,19 @@ router.get('/', (req, res) => {
   res.send('List of all posts');
 });
 
-// Example route: Create a new post
-router.post('/', async (req, res) => {
+const { body, validationResult } = require('express-validator');
+router.post('/',
+[
+  body('title').isLength({ min: 4 }).withMessage('Title must be at least 3 characters long'),
+  body('content').isLength({ min: 20 }).withMessage('Post is too short!')
+], async (req, res) => {
+  
+  const errors = validationResult(req);
+  if( !errors.isEmpty ){
+    console.log(errors.array());
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const newPost = new Post({
     title: req.body.title,
     content: req.body.content,
@@ -18,6 +29,7 @@ router.post('/', async (req, res) => {
 
   try {
     const savedPost = await newPost.save();
+    console.log("New post created");
     res.status(201).json(savedPost);
   } catch (err) {
     console.log(err); // This will help identify what went wrong
