@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const saltRounds = 10; // You can adjust the cost factor as needed
+const jwt = require('jsonwebtoken');
+const authenticateToken = require('../middleware/authenticateToken');
 
 router.get('/', (req, res) => {
   res.send('List of users???');
@@ -10,6 +11,11 @@ router.get('/', (req, res) => {
 
 router.get("/new", (req, res) => {
   res.send('New user form');
+});
+
+router.get('/profile', authenticateToken, (req, res) => { // A protected route
+  // req.user is available here thanks to the authenticateToken middleware
+  res.send(req.user);
 });
 
 const { body, validationResult } = require('express-validator');
@@ -26,7 +32,7 @@ router.post("/new",
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
     const newUser = new User({
     username: req.body.username,
@@ -46,13 +52,22 @@ router.post("/new",
 
 router.post('/login', async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email: req.body.email }); // mongodb findone finds user based off email
 
     if (user) {
       const isMatch = await bcrypt.compare(req.body.password, user.password);
 
       if (isMatch) {
-        res.status(200).json({ message: 'Logged in successfully' }); // Passwords match, proceed with login
+
+        const token = jwt.sign(
+          {userID: user._id }, // This is the payload, typically containing user ID and other data
+          process.env.JWT_SECRET, // The secret key, which should be stored in an environment variable
+          { expiresIn: '1h' } // Options, setting the token to expire in one hour
+        );
+
+        res.json({ token });
+
+        //res.status(200).json({ message: 'Logged in successfully' }); // Passwords match, proceed with login
         console.log('Logged in successfully');
       } else {
         res.status(401).json({ message: 'Invalid credentials' }); // Passwords do not match
