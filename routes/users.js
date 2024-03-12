@@ -18,6 +18,7 @@ router.get('/profile', authenticateToken, (req, res) => { // A protected route
   res.send(req.user);
 });
 
+
 const { body, validationResult } = require('express-validator');
 router.post("/new",
   [
@@ -81,5 +82,35 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+router.delete('/:id', authenticateToken, async (req, res) => { // DELETE request to remove a user by id
+  try {
+    // Check if the user ID from the token matches the user ID to delete or if the user is an admin
+    if (req.user.userID === req.params.id || req.user.isAdmin) {
+      await User.findByIdAndDelete(req.params.id);
+      console.log("User deleted successfully")
+      res.status(200).json({ message: 'User deleted successfully' });
+    } else {
+      res.status(403).json({ message: 'Unauthorized to delete this user' });
+      console.log("Unauthorized to delete this user")
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.post('/new_username', authenticateToken, async (req, res) => {
+  let new_username = "placeHolderName";
+  
+  try {
+    await User.updateOne({ _id: req.user.userID}, {
+      $set: {username: new_username}
+  })
+  res.status(200).json({ message: 'username updated' });
+  console.log("username updated");
+} catch (err) {
+  res.status(403).json({ message: 'Unable to change name :C' });
+}});
+
 
 module.exports = router;
