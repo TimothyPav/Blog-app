@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const router = express.Router();
 const app = express();
@@ -14,6 +15,7 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again after 15 minutes",
 });
 
+app.use(cors());
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Middleware for parsing application/x-www-form-urlencoded
 app.use(limiter);
@@ -35,6 +37,9 @@ app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Hello from the backend!' });
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

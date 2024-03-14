@@ -1,10 +1,24 @@
-import React from 'react';
-// No need to import a CSS file if you don't have any styles yet
+import React, { useState } from 'react';
 
 function App() {
+  const [message, setMessage] = useState('');
+
+  const fetchHelloMessage = async () => {
+    try {
+      const response = await fetch('/api/hello');
+      const data = await response.json();
+      setMessage(data.message);
+    } catch (error) {
+      console.error('Error fetching message:', error);
+      setMessage('Failed to fetch message:', error);
+    }
+  };
+
   return (
-    <div>
-      <h1>Hello, Blog App!</h1>
+    <div className="App">
+      <h1>Blog App</h1>
+      <button onClick={fetchHelloMessage}>Get Hello Message</button>
+      <p>{message}</p>
     </div>
   );
 }
