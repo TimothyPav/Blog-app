@@ -16,6 +16,7 @@ const limiter = rateLimit({
 });
 
 app.use(cors());
+app.set('trust proxy', 1); // Trust first proxy
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Middleware for parsing application/x-www-form-urlencoded
 app.use(limiter);
