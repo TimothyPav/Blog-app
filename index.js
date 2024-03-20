@@ -35,7 +35,7 @@ app.use('/posts', postsRouter);
 app.use('/users', usersRouter); // Example for user routes
 
 app.get('/', (req, res) => {
-  res.send('Hello, World!');
+  res.json({ message: 'Hellllllo, World!' });
 });
 
 app.get('/api/hello', (req, res) => {

@@ -4,7 +4,20 @@ const Post = require('../models/Post.js');
 
 // Example route: Get all posts
 router.get('/', (req, res) => {
-  res.send('List of all posts');
+  const limit = req.query.limit ? parseInt(req.query.limit, 10) : 0; // Convert limit to number, default to all posts
+
+  Post.find({}).limit(limit)
+    .then(posts => {
+      res.json(posts);
+    })
+    .catch(error => {
+      console.error('Error fetching posts:', error);
+      res.status(500).send('Error fetching posts');
+    });
+});
+
+router.post('/qwerty', (req, res) => {
+  res.json({ message: 'List of all posts' });
 });
 
 const { body, validationResult } = require('express-validator');
