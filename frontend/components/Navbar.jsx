@@ -32,7 +32,7 @@ export default function Navbar() {
             <nav>
                 <div className="h-10vh flex justify-between z-50 text-white lg:py-5 px-20 py-4">
                     <div className="flex items-center flex-1">
-                    <img src={logoIMG} alt="Logo" className="h-8" />
+                    <img src={logoIMG} alt="Logo" className="h-8 cursor-pointer" />
                     </div>
                     <div className="lg:flex md:flex lg:flex-1 items-center justify-end font-normal hidden">
                         <div className="flex-10">
