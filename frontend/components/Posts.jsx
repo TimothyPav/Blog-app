@@ -13,7 +13,7 @@ export default function BlogPosts() {
     return (
         <div className='p-4'>
         {posts.map(post => (
-            <div key={post._id} className="max-w-4xl mx-auto border-green-300 bg-white border-4 rounded-xl shadow-md overflow-hidden mb-3 cursor-pointer">
+            <div key={post._id} className="max-w-4xl mx-auto border-green-300 bg-white border-4 rounded-xl shadow-md overflow-hidden mb-3 bg-opacity-30 cursor-pointer">
               <div className="p-4">
             <h2 className="flex justify-center font-bold text-xl mb-2">{post.title}</h2>
             <p className="text-gray-700 text-base" style={{
