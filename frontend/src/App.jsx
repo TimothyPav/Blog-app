@@ -10,6 +10,13 @@ const backgroundIMG = "https://www.veeforu.com/wp-content/uploads/2022/10/Simple
 export default function App() {
   const [message, setMessage] = useState("");
 
+  const appStyle = {
+    backgroundImage: `url(${backgroundIMG})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    minHeight: '100vh', // This makes sure your div stretches to at least the full height of the viewport
+  };
+
   return (
     <Router>
       <div className="bg-slate-900">
@@ -28,5 +35,15 @@ export default function App() {
         </h1>
       </div>
     </Router>
+  );
+    <div style={appStyle}>
+      <div className="bg-slate-900">
+        <Navbar />
+      </div>
+      <BlogPosts />
+      <h1 className="text-3xl font-bold underline text-white">
+        Blog APP!
+      </h1>
+    </div>
   );
 }
