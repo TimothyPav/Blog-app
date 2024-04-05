@@ -19,10 +19,10 @@ export default function App() {
 
   return (
     <Router>
-      <div className="bg-slate-900">
-        <Navbar />
-      </div>
-      <div style={{backgroundImage: `url(${backgroundIMG})`}}>
+      <div style={appStyle}> {/* Apply the background style here */}
+        <div className="bg-slate-900">
+          <Navbar />
+        </div>
         {/* The Routes component wraps Route components to enable routing */}
         <Routes>
           {/* Route for the home page that lists all blog posts */}
@@ -35,15 +35,5 @@ export default function App() {
         </h1>
       </div>
     </Router>
-  );
-    <div style={appStyle}>
-      <div className="bg-slate-900">
-        <Navbar />
-      </div>
-      <BlogPosts />
-      <h1 className="text-3xl font-bold underline text-white">
-        Blog APP!
-      </h1>
-    </div>
   );
 }

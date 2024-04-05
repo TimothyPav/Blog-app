@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post.js');
+const authenticateToken = require('../middleware/authenticateToken');
 
 // Example route: Get all posts
 router.get('/', (req, res) => {
@@ -21,7 +22,7 @@ router.post('/qwerty', (req, res) => {
 });
 
 const { body, validationResult } = require('express-validator');
-router.post('/',
+router.post('/', authenticateToken,
 [
   body('title').isLength({ min: 4 }).withMessage('Title must be at least 3 characters long'),
   body('content').isLength({ min: 20 }).withMessage('Post is too short!')
@@ -36,7 +37,7 @@ router.post('/',
   const newPost = new Post({
     title: req.body.title,
     content: req.body.content,
-    author: req.body.author, // This would be the ObjectId of the user
+    author: req.user.userID, // This would be the ObjectId of the user
     genre: req.body.genre
   });
 
@@ -51,9 +52,20 @@ router.post('/',
 });
 
 // Example route: Get a single post by id
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  res.send(`Fetching post with id ${id}`);
+
+  try {
+    const post = await Post.findById(id); // Find the post by ID
+    if (post) {
+      res.json(post); // Send back the found post
+    } else {
+      res.status(404).send('Post not found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching post');
+  }
 });
 
 module.exports = router;
