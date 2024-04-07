@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import BlogPosts from '../components/Posts';
 import IndividualPost from '../components/IndividualPost';
+import CreatePost from '../components/CreatePost';
 
 const backgroundIMG = "https://www.veeforu.com/wp-content/uploads/2022/10/Simple-green-pastel-background.-scaled.jpg"
 
@@ -25,9 +26,8 @@ export default function App() {
         </div>
         {/* The Routes component wraps Route components to enable routing */}
         <Routes>
-          {/* Route for the home page that lists all blog posts */}
           <Route path="/" element={<BlogPosts />} />
-          {/* Route for individual blog posts, note the ":id" parameter */}
+          <Route path="/posts/new" element={<CreatePost />} />
           <Route path="/posts/:id" element={<IndividualPost />} />
         </Routes>
         <h1 className="text-3xl font-bold underline">

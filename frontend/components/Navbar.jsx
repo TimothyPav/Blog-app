@@ -24,6 +24,9 @@ export default function Navbar() {
                 <Link spy={true} smooth={true} to="SignIn">
                     <li className="my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded">Sign In</li>
                 </Link>
+                <Link spy={true} smooth={true} to="/posts/new">
+                    <li className="my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded">Create Post</li>
+                </Link>
             </ul>
         </div>
     </>
@@ -46,6 +49,9 @@ export default function Navbar() {
                             </Link>
                             <Link spy={true} smooth={true} to="SignIn">
                                 <li className="hover:text-green-400 transition border-b-2 border-slate-900 hover:border-green-400 cursor-pointer" >Sign In</li>
+                            </Link>
+                            <Link spy={true} smooth={true} to="/posts/new">
+                                <li className="hover:text-green-400 transition border-b-2 border-slate-900 hover:border-green-400 cursor-pointer" >Create Post</li>
                             </Link>
                         </ul>
                         </div>

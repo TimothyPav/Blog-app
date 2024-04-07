@@ -19,4 +19,23 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-module.exports = authenticateToken;
+function optionalAuthenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Bearer Token
+
+  if (token == null) {
+    return next(); // No token, proceed without setting req.user
+  }
+
+  jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+    if (!err) {
+      req.user = user; // Token is valid, attach user to request
+    }
+    next(); // Proceed regardless of token validity
+  });
+}
+
+module.exports = {
+  authenticateToken,
+  optionalAuthenticateToken
+};

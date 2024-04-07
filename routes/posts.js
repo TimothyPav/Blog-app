@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post.js');
-const authenticateToken = require('../middleware/authenticateToken');
+const { authenticateToken, optionalAuthenticateToken } = require('../middleware/authenticateToken');
 
 // Example route: Get all posts
 router.get('/', (req, res) => {
@@ -22,7 +22,7 @@ router.post('/qwerty', (req, res) => {
 });
 
 const { body, validationResult } = require('express-validator');
-router.post('/', authenticateToken,
+router.post('/', optionalAuthenticateToken,
 [
   body('title').isLength({ min: 4 }).withMessage('Title must be at least 3 characters long'),
   body('content').isLength({ min: 20 }).withMessage('Post is too short!')
@@ -34,10 +34,12 @@ router.post('/', authenticateToken,
     return res.status(400).json({ errors: errors.array() });
   }
 
+  const author = req.user ? req.user.username : "Anonymous-"+makeid(10)
+
   const newPost = new Post({
     title: req.body.title,
     content: req.body.content,
-    author: req.user.userID, // This would be the ObjectId of the user
+    author: author, // This would be the username of the user
     genre: req.body.genre
   });
 
@@ -50,6 +52,10 @@ router.post('/', authenticateToken,
   res.status(400).json({ message: err.message });
   }
 });
+
+router.get('/new', (req, res) => {
+  
+})
 
 // Example route: Get a single post by id
 router.get('/:id', async (req, res) => {
@@ -67,5 +73,17 @@ router.get('/:id', async (req, res) => {
     res.status(500).send('Error fetching post');
   }
 });
+
+function makeid(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
 
 module.exports = router;

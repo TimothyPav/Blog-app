@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const authenticateToken = require('../middleware/authenticateToken');
+const { authenticateToken, optionalAuthenticateToken } = require('../middleware/authenticateToken');
 
 router.get('/', (req, res) => {
   res.send('List of users???');

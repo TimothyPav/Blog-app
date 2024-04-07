@@ -16,7 +16,7 @@ export default function BlogPosts() {
       {posts.map(post => (
         <Link to={`/posts/${post._id}`} key={post._id} style={{ textDecoration: 'none' }}>
           <div className="max-w-4xl mx-auto border-green-300 bg-white border-4 rounded-xl shadow-md overflow-hidden mb-3 bg-opacity-30">
-            <div className="p-4">
+            <div className="px-4 py-2">
               <h2 className="flex justify-center font-bold text-xl mb-2">{post.title}</h2>
               <p className="text-gray-700 text-base" style={{
                 display: '-webkit-box',
@@ -28,9 +28,10 @@ export default function BlogPosts() {
                 {post.content}
               </p>
             </div>
-            <div>
-              <small className="mr-4 flex justify-end">Genre: {post.genre}</small>
-              <small className="mb-2 mr-4 flex justify-end">Posted on: {post.date}</small>
+            <div className="flex justify-between items-center px-4 py-2">
+              <small>Author: {post.author}</small>
+              <small>Genre: {post.genre}</small>
+              <small>Posted on: {post.date}</small>
             </div>
           </div>
         </Link>
