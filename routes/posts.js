@@ -34,7 +34,7 @@ router.post('/', optionalAuthenticateToken,
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const author = req.user ? req.user.username : "Anonymous-"+makeid(10)
+  const author = req.user ? req.user.username : "Anonymous"
 
   const newPost = new Post({
     title: req.body.title,
@@ -73,17 +73,5 @@ router.get('/:id', async (req, res) => {
     res.status(500).send('Error fetching post');
   }
 });
-
-function makeid(length) {
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charactersLength = characters.length;
-  let counter = 0;
-  while (counter < length) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    counter += 1;
-  }
-  return result;
-}
 
 module.exports = router;
