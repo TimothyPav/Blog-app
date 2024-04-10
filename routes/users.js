@@ -52,7 +52,12 @@ router.post("/new",
 
 router.post('/login', async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email }); // mongodb findone finds user based off email
+    const user = await User.findOne({
+      $or: [
+        { email: req.body.login },
+        { username: req.body.login }
+      ]
+    });
 
     if (user) {
       const isMatch = await bcrypt.compare(req.body.password, user.password);

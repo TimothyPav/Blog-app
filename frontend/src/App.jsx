@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import BlogPosts from '../components/Posts';
 import IndividualPost from '../components/IndividualPost';
 import CreatePost from '../components/CreatePost';
+import SignIn from '../components/SignIn'
 
 const backgroundIMG = "https://www.veeforu.com/wp-content/uploads/2022/10/Simple-green-pastel-background.-scaled.jpg"
 
@@ -27,6 +28,7 @@ export default function App() {
         {/* The Routes component wraps Route components to enable routing */}
         <Routes>
           <Route path="/" element={<BlogPosts />} />
+          <Route path="/signin" element={<SignIn />} />
           <Route path="/posts/new" element={<CreatePost />} />
           <Route path="/posts/:id" element={<IndividualPost />} />
         </Routes>

@@ -15,16 +15,16 @@ export default function Navbar() {
     const content = <>
         <div className="lg:hidden block absolute top-16 w-full left-0 right-0 bg-slate-900 transition">
             <ul className="text-center text-xl p-20">
-                <Link spy={true} smooth={true} to="">
+                <Link to="">
                     <li className="my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded">Home</li>
                 </Link>
-                <Link spy={true} smooth={true} to="Profile">
+                <Link to="Profile">
                     <li className="my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded">Profile</li>
                 </Link>
-                <Link spy={true} smooth={true} to="SignIn">
+                <Link to="/signin">
                     <li className="my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded">Sign In</li>
                 </Link>
-                <Link spy={true} smooth={true} to="/posts/new">
+                <Link to="/posts/new">
                     <li className="my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded">Create Post</li>
                 </Link>
             </ul>
@@ -41,16 +41,16 @@ export default function Navbar() {
                     <div className="lg:flex md:flex lg:flex-1 items-center justify-end font-normal hidden">
                         <div className="flex-10">
                         <ul className="flex gap-8 mr-16 text-[18px]">
-                            <Link spy={true} smooth={true} to="">
+                            <Link to="">
                                 <li className="hover:text-green-400 transition border-b-2 border-slate-900 hover:border-green-400 cursor-pointer" >Home</li>
                             </Link>
-                            <Link spy={true} smooth={true} to="Profile">
+                            <Link to="Profile">
                                 <li className="hover:text-green-400 transition border-b-2 border-slate-900 hover:border-green-400 cursor-pointer" >Profile</li>
                             </Link>
-                            <Link spy={true} smooth={true} to="SignIn">
+                            <Link to="/signin">
                                 <li className="hover:text-green-400 transition border-b-2 border-slate-900 hover:border-green-400 cursor-pointer" >Sign In</li>
                             </Link>
-                            <Link spy={true} smooth={true} to="/posts/new">
+                            <Link to="/posts/new">
                                 <li className="hover:text-green-400 transition border-b-2 border-slate-900 hover:border-green-400 cursor-pointer" >Create Post</li>
                             </Link>
                         </ul>
