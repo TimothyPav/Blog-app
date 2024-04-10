@@ -5,6 +5,9 @@ import BlogPosts from '../components/Posts';
 import IndividualPost from '../components/IndividualPost';
 import CreatePost from '../components/CreatePost';
 import SignIn from '../components/SignIn'
+import CreateAccount from '../components/CreateAccount';
+import Test from '../components/Test'
+import Profile from '../components/Profile'
 
 const backgroundIMG = "https://www.veeforu.com/wp-content/uploads/2022/10/Simple-green-pastel-background.-scaled.jpg"
 
@@ -31,6 +34,9 @@ export default function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/posts/new" element={<CreatePost />} />
           <Route path="/posts/:id" element={<IndividualPost />} />
+          <Route path="/CreateAccount" element={<CreateAccount />} />
+          <Route path="/Test" element={<Test />} />
+          <Route path="/users/profile" element={<Profile />} />
         </Routes>
         <h1 className="text-3xl font-bold underline">
           Blog APP!

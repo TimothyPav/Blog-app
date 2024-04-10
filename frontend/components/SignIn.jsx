@@ -1,21 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+let isSignedIn = 'qwerty'
+function DisplayLoginFeedback({isSignedIn}){
+  'isSignedIn: ' + isSignedIn
+  if(isSignedIn == true){
+    //console.log('isSignedIn: ' + isSignedIn)
+    return <p className='text-green-400'>Successfully Signed In</p>
+  } else if(isSignedIn == false){
+    return <p className='text-red-400'>Invalid Credentials</p>
+  } else {
+    return null
+  }
+}
+
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isSignedIn, setIsSignedIn] = useState(null);
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
     event.preventDefault();
     
+    console.log("MAIN SIGN IN FUNCTION IS RUNNING")
     const payload = {
-        login: email, // assuming you have a state variable 'email'
-        password: password, // assuming you have a state variable 'password'
+        login: email,
+        password: password,
       };
 
-      console.log(email)
-      console.log(password)
       try {
         const response = await fetch('http://localhost:3000/users/login', {
           method: 'POST',
@@ -32,9 +45,12 @@ export default function SignIn() {
         const data = await response.json(); // or 'await response.text();' if your server sends a plain text response
         // Handle success - perhaps saving the received token to localStorage/sessionStorage and redirecting the user
         console.log(data);
+        localStorage.setItem('token', data.token);
+        setIsSignedIn(true);
       } catch (error) {
         // Handle errors - such as displaying a message to the user
-        console.error('There was a problem with the fetch operation:', error);
+        //console.error('There was a problem with the fetch operation:', error);
+        setIsSignedIn(false);
       }
   };
 
@@ -81,6 +97,9 @@ export default function SignIn() {
           >
             Create Account
           </button>
+        </div>
+        <div className='py-2 font-bold'>
+        <DisplayLoginFeedback isSignedIn={isSignedIn} />
         </div>
       </form>
     </div>

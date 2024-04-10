@@ -8,7 +8,7 @@ function Item({ name, isPacked }) {
     return <li className="item">{name}</li>;
   }
   
-  export default function CreateAccount() {
+  export default function Test() {
     return (
       <section>
         <h1>Sally Ride's Packing List</h1>

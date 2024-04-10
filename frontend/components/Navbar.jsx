@@ -18,7 +18,7 @@ export default function Navbar() {
                 <Link to="">
                     <li className="my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded">Home</li>
                 </Link>
-                <Link to="Profile">
+                <Link to="/users/profile">
                     <li className="my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded">Profile</li>
                 </Link>
                 <Link to="/signin">
@@ -44,7 +44,7 @@ export default function Navbar() {
                             <Link to="">
                                 <li className="hover:text-green-400 transition border-b-2 border-slate-900 hover:border-green-400 cursor-pointer" >Home</li>
                             </Link>
-                            <Link to="Profile">
+                            <Link to="/users/profile">
                                 <li className="hover:text-green-400 transition border-b-2 border-slate-900 hover:border-green-400 cursor-pointer" >Profile</li>
                             </Link>
                             <Link to="/signin">
