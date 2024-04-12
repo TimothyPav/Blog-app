@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 export default function IndividualPost() {
     const [post, setPost] = useState(null);
     const { id } = useParams(); // Get the post ID from the URL
-
   useEffect(() => {
     fetch(`http://localhost:3000/posts/${id}`) // Adjust the URL to match your API
       .then(response => response.json())

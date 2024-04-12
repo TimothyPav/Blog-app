@@ -13,9 +13,19 @@ router.get("/new", (req, res) => {
   res.send('New user form');
 });
 
-router.get('/profile', authenticateToken, (req, res) => { // A protected route
-  // req.user is available here thanks to the authenticateToken middleware
-  res.send(req.user);
+
+router.get('/profile', authenticateToken, async (req, res) => {
+  // req.user contains the JWT payload including userID
+  try {
+      const user = await User.findById(req.user.userID); // Fetch user from database
+      if (!user) {
+          return res.status(404).send('User not found');
+      }
+      res.send(user); // Send the full user profile
+  } catch (error) {
+      console.error("Failed to fetch user:", error);
+      res.status(500).send("Error fetching user data");
+  }
 });
 
 const { body, validationResult } = require('express-validator');

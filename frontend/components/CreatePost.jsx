@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 export default function CreatePost() {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
+    const token = localStorage.getItem('token');
 
     // Handlers for changes in the title and body fields
     const handleTitleChange = (event) => setTitle(event.target.value);
@@ -23,9 +24,9 @@ export default function CreatePost() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Include additional headers as necessary, such as authorization headers
+                    'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify(newPost),
+                body: JSON.stringify({ title, content: body, genre: "General" })
             });
 
             if (!response.ok) {

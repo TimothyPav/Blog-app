@@ -2,23 +2,52 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post.js');
 const { authenticateToken, optionalAuthenticateToken } = require('../middleware/authenticateToken');
+const User = require('../models/User');
 
+function parseDate(dateStr) {
+  // Match the date and time parts of the format 'm/d/yyyy @ h:mm AM/PM'
+  const parts = dateStr.match(/(\d+)\/(\d+)\/(\d+) @ (\d+):(\d+) ([APM]+)/);
+  
+  // Extract parts using destructuring
+  const [, month, day, year, hour, minutes, modifier] = parts;
+
+  // Convert 12-hour time to 24-hour time
+  let hours24 = parseInt(hour, 10);
+  if (modifier === 'PM' && hours24 < 12) {
+    hours24 += 12;
+  } else if (modifier === 'AM' && hours24 === 12) {
+    hours24 = 0;
+  }
+
+  // Return the date object
+  return new Date(year, month - 1, day, hours24, minutes);
+}
 // Example route: Get all posts
-router.get('/', (req, res) => {
-  const limit = req.query.limit ? parseInt(req.query.limit, 10) : 0; // Convert limit to number, default to all posts
+router.get('/', async (req, res) => {
+  try {
+    let posts = await Post.find().limit(100); // Adjust limit as needed
 
-  Post.find({}).limit(limit)
-    .then(posts => {
-      res.json(posts);
-    })
-    .catch(error => {
-      console.error('Error fetching posts:', error);
-      res.status(500).send('Error fetching posts');
-    });
+    // Sort the posts by date using the custom parseDate function
+    posts = posts.sort((a, b) => parseDate(b.date) - parseDate(a.date));
+
+    // Slice the array to only include the latest 10 posts
+    posts = posts.slice(0, 15);
+
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
-router.post('/qwerty', (req, res) => {
-  res.json({ message: 'List of all posts' });
+router.get('/by-author/:authorName', async (req, res) => {
+  const authorName = req.params.authorName;
+  try {
+      const posts = await Post.find({ author: authorName });
+      res.json(posts);
+  } catch (error) {
+      console.error("Error accessing the database:", error);
+      res.status(500).send("Error accessing the database");
+  }
 });
 
 const { body, validationResult } = require('express-validator');
@@ -34,7 +63,12 @@ router.post('/', optionalAuthenticateToken,
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const author = req.user ? req.user.username : "Anonymous"
+  let user = null
+  try {
+    console.log("req.user: " + req.user)
+    user = await User.findById(req.user.userID);
+  } catch {}
+  const author = user!=null ? user.username : "Anonymous"
 
   const newPost = new Post({
     title: req.body.title,

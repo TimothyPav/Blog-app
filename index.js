@@ -16,6 +16,7 @@ const limiter = rateLimit({
 });
 
 app.use(cors());
+
 app.set('trust proxy', 1); // Trust first proxy
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Middleware for parsing application/x-www-form-urlencoded
@@ -24,7 +25,6 @@ app.use(express.urlencoded({ extended: true })); // Middleware for parsing appli
 mongoose.connect('mongodb://localhost:27017/blogDB')
 .then(() => console.log("Connected to MongoDB"))
 .catch(err => console.error("An error has occurred", err));
-
 
 // Require route modules
 const postsRouter = require('./routes/posts');
