@@ -32,10 +32,12 @@ const { body, validationResult } = require('express-validator');
 router.post("/new",
   [
     body('username').isLength({ min: 3 }).withMessage('Username must be at least 3 characters long'), // username should not be empty
-    body('email').isEmail().withMessage('Email is invalid'), // username must be an email
+    //body('email').isEmail().withMessage('Email is invalid'), // username must be an email
     body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long') // password must be at least 5 chars long
   ], async (req, res) => {
 
+    console.log("email: " + req.body.email)
+    
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
     if (!errors.isEmpty()) {
       console.log(errors.array());

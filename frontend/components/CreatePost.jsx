@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function CreatePost() {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const token = localStorage.getItem('token');
+    const navigate = useNavigate();
 
     // Handlers for changes in the title and body fields
     const handleTitleChange = (event) => setTitle(event.target.value);
@@ -35,9 +37,11 @@ export default function CreatePost() {
 
             const responseData = await response.json();
             console.log('Post created successfully:', responseData);
-            // Optionally, clear the form or give user feedback
+        
             setTitle(''); // Clear title field
             setBody(''); // Clear body field
+            toast.success("Post created successfully")
+            navigate('/')
         } catch (error) {
             console.error('Error creating post:', error);
         }

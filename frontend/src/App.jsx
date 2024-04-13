@@ -9,7 +9,6 @@ import IndividualPost from '../components/IndividualPost';
 import CreatePost from '../components/CreatePost';
 import SignIn from '../components/SignIn'
 import CreateAccount from '../components/CreateAccount';
-import Test from '../components/Test'
 import Profile from '../components/Profile'
 
 
@@ -38,7 +37,6 @@ export default function App() {
           <Route path="/posts/new" element={<CreatePost />} />
           <Route path="/posts/:id" element={<IndividualPost />} />
           <Route path="/createaccount" element={<CreateAccount />} />
-          <Route path="/test" element={<Test />} />
           <Route path="/users/profile" element={<Profile />} />
         </Routes>
         <ToastContainer

@@ -52,7 +52,6 @@ export default function () {
 
     return (
         <div>
-            <h1>User Posts</h1>
             {posts.map(post => (
                 <div key={post._id} className='post mb-10'>
                     <div className='text-center'>
