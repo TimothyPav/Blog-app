@@ -38,7 +38,7 @@ export default function CreatePost() {
             }
 
             const responseData = await response.json();
-            console.log('Post created successfully:', responseData);
+            //console.log('Post created successfully:', responseData);
         
             setTitle(''); // Clear title field
             setBody(''); // Clear body field
